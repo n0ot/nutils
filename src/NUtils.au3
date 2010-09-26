@@ -19,7 +19,7 @@ if @Compiled Then NUtilsLoad()
 Global $lang = INIRead("settings.ini", "settings", "language", "eng")
 Global $StackCounter=INIRead("settings.ini", "settings", "StackCounter", "1")
 
-Const $Info_Version="3.0"
+Const $Info_Version="3.0.[unknown]"
 Const $Info_Authors = "Niko Carpenter "&_t("and")&" Tyler Spivey"
 Const $Info_WebSite = "http://www.arbalon.com"
 if $cmdline[0] < 1 Then Exit
@@ -51,7 +51,6 @@ trayItemSetOnEvent($tid_Checkforupdates, "trayEvent")
 trayItemSetOnEvent($tid_about, "trayEvent")
 global $shift = 0
 $hwFile = @TempDir & "\NUtils_Hiddenwindows"
-FileChangeDir(@ScriptDir)
 While WinExists($winname)
 WinKill($winname)
 Wend
@@ -133,7 +132,7 @@ for $i = 0 to ubound($windows)-1
 if $windows[$i] <> hwnd(0) and WinExists($windows[$i]) = 0 Then
 $windows[$i] = hwnd(0)
 historyDel($i)
-If FileExists("Disappear.wav") Then SoundPlay("Disappear.wav")
+If FileExists("Sounds\Disappear.wav") Then Soundplay("sounds\Disappear.wav")
 $ChangedWin = 1
 EndIf
 Next
@@ -177,8 +176,8 @@ EndFunc
 
 Func End()
 ProcessClose(WinGetProcess("[ACTIVE]"))
-if FileExists("kill.wav") Then
-SoundPlay("kill.wav")
+if FileExists("Sounds\kill.wav") Then
+Soundplay("sounds\kill.wav")
 Else
 Beep(60, 300)
 EndIf
@@ -225,8 +224,8 @@ hotkeys(1)
 endFunc
 Func Reload()
 if FileExists(@ScriptFullPath) and FileExists(StringTrimRight(@ScriptFullPath, 3) & "exe") Then
-if FileExists("restart.wav") Then
-SoundPlay("restart.wav", 1)
+if FileExists("Sounds\restart.wav") Then
+Soundplay("sounds\restart.wav", 1)
 Else
 Beep(400, 40)
 Beep(600, 40)
@@ -267,14 +266,14 @@ Func ShowHideWin($Handle, $num)
 $Handle = hwnd($Handle)
 if $windows[$num] = 0 then
 if $handle = WinGetHandle("[class:Progman]") or $handle = WinGetHandle("[class:Shell_TrayWnd]") Then
-If FileExists("HideEr.wav") Then
-SoundPlay("HideEr.wav")
+If FileExists("Sounds\HideEr.wav") Then
+Soundplay("sounds\HideEr.wav")
 Else
 Beep(70, 100)
 EndIf
 Else
-if FileExists(@ScriptDir&"\windown.wav") Then
-SoundPlay(@ScriptDir&"\windown.wav")
+if FileExists("Sounds\windown.wav") Then
+Soundplay("sounds\windown.wav")
 Else
 Beep(1500, 100)
 EndIf
@@ -289,8 +288,8 @@ winSetState($handle, "", @SW_SHOW)
 winActivate($handle)
 $windows[$num] = 0
 historyDel($num)
-if FileExists(@ScriptDir&"\winup.wav") Then
-SoundPlay(@ScriptDir&"\winup.wav")
+if FileExists("Sounds\winup.wav") Then
+Soundplay("sounds\winup.wav")
 Else
 Beep(1500, 50)
 Sleep(50)
@@ -607,9 +606,9 @@ func dummy()
 endFunc
 Func StackNotify()
 If $StackCounter = 1 Then
-if fileExists("stack.wav") then
+if fileExists("Sounds\stack.wav") then
 for $i = 1 to $shift/10+1
-SoundPlay("stack.wav", 1)
+Soundplay("sounds\stack.wav", 1)
 next
 Else
 for $i = 1 to $shift/10+1
@@ -619,9 +618,9 @@ next
 EndIf
 Else
 If Not PlayNum($Shift/10+1) Then
-if fileExists("stack.wav") then
+if fileExists("Sounds\stack.wav") then
 for $i = 1 to $shift/10+1
-SoundPlay("stack.wav", 1)
+Soundplay("sounds\stack.wav", 1)
 next
 Else
 for $i = 1 to $shift/10+1
@@ -640,14 +639,14 @@ Return
 EndIf
 $played = 1
 for $i = 1 to $n[0]
-If Not FileExists("nums\" & $n[$i] & ".wav") Then
+If Not FileExists("Sounds\nums\" & $n[$i] & ".wav") Then
 $Played = 0
 ExitLoop
 EndIf
 Next
 If $Played Then
 for $i = 1 to $n[0]
-SoundPlay("nums\" & $n[$i] & ".wav", 1)
+Soundplay("sounds\nums\" & $n[$i] & ".wav", 1)
 Next
 Return 1
 Else
@@ -670,14 +669,14 @@ Func SetPriority()
 Hotkeys(0)
 $num = int(stringMid(@hotKeyPressed, StringLen($hk_bass)+3, 1))-3
 If ProcessSetPriority(WinGetProcess("[active]"), $num) Then
-If FileExists("ProcessPrioritySounds\"&$num&".wav") Then
-SoundPlay("ProcessPrioritySounds\"&$Num&".wav")
+If FileExists("Sounds\ProcessPrioritySounds\"&$num&".wav") Then
+Soundplay("sounds\ProcessPrioritySounds\"&$Num&".wav")
 Else
 Beep(Round(440*(2^(($num*2)/12))), 60)
 EndIf
 Else
-If FileExists("ProcessPrioritySounds\er.wav") Then
-SoundPlay("ProcessPrioritySounds\er.wav")
+If FileExists("Sounds\ProcessPrioritySounds\er.wav") Then
+Soundplay("sounds\ProcessPrioritySounds\er.wav")
 Else
 Beep(80, 130)
 EndIf
