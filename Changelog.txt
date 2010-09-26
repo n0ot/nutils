@@ -1,0 +1,42 @@
+3.0:
+Hidden windows are now saved to the temp folder.
+Bug fix: Sometimes unhide window would crash NUtils.
+Fixed unhide GUI (positioning)
+Check for updates feature added.
+Changed handling of slots; now goes from 1-10 rather than 0-9.
+Bug fix: Hidden windows that disappeared weren't removed from the hidden window list in all cases.
+You may no longer hide the desktop/system tray/start menu (Classes: Progman and Shell_TrayWnd.)
+PC speaker beeps now play when wave files don't exist (similar to old versions.)
+Changed frequency of transparent/solid PC speaker beeps.
+Made changes to sound files (to decrease size.)
+The current window's process priority can be set with hotkeys.
+A sound plays when a hidden window no longer exists.
+Selecting a stack number in the unhide dialog will unhide all windows in that stack.
+Bug fix: Hiding and unhiding a window in slot 0 using the unhide dialog didn't work.
+Bug fix: GUI event loop did not exit when closing the unhide window.
+Process Explorer hotkey removed.
+Added multilingual support.
+Reallowed old-style StackCounter beeps: You can now toggle between the two styles.
+Now comes with the DTMF numbers pack only; StackCounter notifications are enabled by default.
+No longer plays StackCounter sound on stack change with StackCounter set to 0.
+Reverts to old-style StackCounter setting if one or more numbers to play are missing.
+Hotkeys can now be redefined in a configuration file.
+2.7:
+Stacks are now announced by numbers.
+2.6:
+NUtils loader has been removed; It is now part of the actual source code.
+It is not necessary to recompile everytime it is modified, but it is recommended if you are planning to release it.
+NUtils is now licensed under the GPL
+2.5:
+Added the ability to hide a window in the first available slot.
+Users can now see all of their hidden windows and unhide them from anywhere with one keystroke.
+2.2:
+Windows can now be made transparent
+Useless PC speaker beeps removed; the volume of sound files has been decreased.
+     2.1:
+No longer crashes when running on a device that has been removed.
+     R2:
+You may no longer have NUtils send normal close messages to a window; if the window would have come up with a dialog on window close, NUtils would try closing it and loop endlessly.
+NUtils hide function fixed; no longer tries hiding the active window.
+Array is resizeable; boosts performance and decreases the size of hiddenwindows.
+You may now unhide windows from the system tray.
