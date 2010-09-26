@@ -2,3 +2,5 @@ Building NUtils:
 
 Building NUtils is very simple. To compile NUtils, you'll need to get AutoIIt version 3.3.0.0 or later (AutoIt loves changing stuff around that breaks code written in earlier versions, so if things break, use AutoIt 3.3.0.0).
 AutoIt can be downloaded at http://www.autoitscript.com/autoit3
+
+Once AutoIt is installed, right click NUtils.au3 and compile script. If you are running on x64, choose compile script (x86).
