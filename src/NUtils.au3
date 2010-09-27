@@ -32,7 +32,6 @@ Exit
 EndIf
 global $hiddenwindows[1] = ["x"]
 Global Const $GUI_FOCUS = 256
-Global $StackCounter=INIRead("settings.ini", "settings", "StackCounter", "1")
 Global Const $GUI_EVENT_CLOSE = -3
 Global Const $GUI_DISABLE = 128
 AutoItSetOption("WinTitleMatchMode", 4)
@@ -54,10 +53,10 @@ $hwFile = @TempDir & "\NUtils_Hiddenwindows"
 While WinExists($winname)
 WinKill($winname)
 Wend
-Global $hk_bass=INIRead("hotkeys.ini", "hotkeys", "bass", "#+")
-Global $hk_stackdown=INIRead("hotkeys.ini", "hotkeys", "stackdown", "#+-")
-Global $hk_stackup=INIRead("hotkeys.ini", "hotkeys", "stackup", "#+=")
-Global $hk_chtitle=INIRead("hotkeys.ini", "hotkeys", "chtitle", "!^t")
+Global $hk_bass=INIRead("hotkeys.ini", "hotkeys", "bass", "^+")
+Global $hk_stackdown=INIRead("hotkeys.ini", "hotkeys", "stackdown", "^+-")
+Global $hk_stackup=INIRead("hotkeys.ini", "hotkeys", "stackup", "^+=")
+Global $hk_chtitle=INIRead("hotkeys.ini", "hotkeys", "chtitle", "#+t")
 Global $hk_transparent=INIRead("hotkeys.ini", "hotkeys", "transparent", "#+\")
 Global $hk_solid=INIRead("hotkeys.ini", "hotkeys", "solid", "#+/")
 Global $hk_firstavailhide=INIRead("hotkeys.ini", "hotkeys", "firstavailhide", "#+h")

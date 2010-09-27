@@ -10,7 +10,7 @@ You can also change the title of a window. This is nice when you have many windo
 You can make windows transparent so they can be hidden yet controlled by the user.
 You can forcefully kill the current window for non-responding applications.
 You can modify the code and restart NUtils without having to hunt for it or even without having AutoIt installed.
-You can also configure a list of windows to be automatically killed when they are seen like "Skype™ - Receiving file. Done!".
+You can also configure a list of windows to be automatically killed when they are seen.
 You can hide a window in the first available slot with one keystroke.
 You can bring up a list of all hidden windows and unhide the one you want, either via the system tray or a quick keystroke.
 To learn how to use these functions and many others, read on.
@@ -20,18 +20,18 @@ To learn how to use these functions and many others, read on.
 Note: This readme asumes that you are using the default hotkey assignments.
 If you have changed any hotkeys in hotkeys.ini, you will have to make a note of that when accessing those functions.
 NUtils lets you hide and unhide up to 10 windows.
-When pressing windows+shift+0-9, if there is no hidden window in that slot, the active window will be hidden.
+When pressing control+shift+0-9, if there is no hidden window in that slot, the active window will be hidden.
 If there is a hidden window in that slot, the hidden window will be shown.
 These window states will be saved in a file called hiddenwindows in order to save their state in case NUtils is restarted.
-For example, pressing windows+shift+1 will hide the active window. Pressing it again at anytime will unhide it.
+For example, pressing control+shift+1 will hide the active window. Pressing it again at anytime will unhide it.
 
-If you need to hide more than 10 windows, press windows+shift+= to move to the next stack.
-Windows+Shift+- will move to the previous stack.
+If you need to hide more than 10 windows, press control+shift+= to move to the next stack.
+Control+Shift+- will move to the previous stack.
 The stack you are on will be indicated by the number of beeps that are played. For example, if you are on stack 2, you will hear 2 beeps.
 You may use an unlimited number of stacks and each new stack will give you a fresh set of slots to hide more Windows.
-So if you are on stack 2 and you press windows+shift+1, the current Window can be unhidden by going to stack 2 and pressing windows+shift+1.
+So if you are on stack 2 and you press control+shift+1, the current Window can be unhidden by going to stack 2 and pressing control+shift+1.
 
-Control+Alt+t: Change title of active window.
+Alt+windows+t: Change title of active window.
 A text box will appear. At this time, all other NUtils functions will not be processed.
 The current title will be already filled in.
 Edit the title or enter a new one and click ok.
@@ -81,14 +81,14 @@ To check for updates, click the NUtils icon in the system tray and then click "C
 Other Notes:
 When upgrading to a new version of NUtils, your previous ini's will be overridden.
 Do not delete NUtils.au3.
-To run NUtils, always run Nutilsload.exe
+To run NUtils, always run NUtils.exe
 To call the API to hide and unhide windows from your AutoIt Script,
 Include nutilsApi.au3
 Then call _NUtils_ShowHide($handle) where $handle is the handle of the window you wish to hide.
 
 If you wish to make this application smaller, you may delete the sounds. NUtils will produce PC speaker beeps instead.
 
-If you wish for NUtils to run at startup, right click NUtilsload.exe and go to create shortcut. Then, right click Shortcut to NUtilsload.exe, click cut, and then right click the start button and click open all users.
+If you wish for NUtils to run at startup, right click NUtils.exe and go to create shortcut. Then, right click the newly created shortcut to NUtils.exe, click cut, and then right click the start button and click open all users.
 Double click programs, then double click startup. Go to edit, and click paste.
 
 Contacting:
