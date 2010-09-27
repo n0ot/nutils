@@ -93,13 +93,13 @@ Double click programs, then double click startup. Go to edit, and click paste.
 
 Contacting:
 NUtils can be found at http://www.arbalon.com.
-You may contact either Niko or Tyler via email.
-Niko (primary contact): nik62591@gmail.com
-Tyler: tspivey@pcdesk.net
+You may contact either Niko Carpenter or Tyler Spivey via email.
+Niko Carpenter (primary contact): nik62591@gmail.com
+Tyler Spivey: tspivey@pcdesk.net
 
 
 Credits:
-     While I, Niko, am the original coder for NUtils, I need to give credit to a few people who've helped me a lot along the way.
+     While I, Niko Carpenter, am the original coder for NUtils, I need to give credit to a few people who've helped me a lot along the way.
 1. I give credit to Tyler Spivey, who has done most of the coding of NUtils other than myself.
      And for coming up with a great idea for the NUtils API/coding the NUtils API. He is the co-author of this program.
 2. Justin Thornton, for giving me and Tyler the idea for stacks; without him, NUtils would still be limited to only 10 Windows. And to him for the process priority idea.
