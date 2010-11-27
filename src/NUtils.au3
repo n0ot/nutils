@@ -128,11 +128,13 @@ guiRegisterMsg(0x0501, "api")
 While 1
 $ChangedWin = 0
 for $i = 0 to ubound($windows)-1
-if $windows[$i] <> hwnd(0) and WinExists($windows[$i]) = 0 Then
+if $windows[$i] <> hwnd(0) Then
+If WinExists($windows[$i]) = 0 or BitAnd(WinGetState($Windows[$i]), 2) Then
 $windows[$i] = hwnd(0)
 historyDel($i)
 If FileExists("Sounds\Disappear.wav") Then Soundplay("sounds\Disappear.wav")
 $ChangedWin = 1
+EndIf
 EndIf
 Next
 if $ChangedWin = 1 Then SaveHiddenWindowState()
