@@ -13,6 +13,7 @@
     along with NUtils.  If not, see http://www.gnu.org/licenses/.
 #ce
 
+#include "include\Inet.au3"
 FileChangeDir(@ScriptDir)
 $winname = "ArbalonNUtilsWND"
 if @Compiled Then NUtilsLoad()
@@ -26,7 +27,7 @@ if $cmdline[0] < 1 Then Exit
 if $cmdline[1] = "CheckForUpdatesQuiet" Then
 CheckForUpdates(true)
 Exit
-ElseIff $cmdline[1] = "CheckForUpdates" Then
+ElseIf $cmdline[1] = "CheckForUpdates" Then
 CheckForUpdates(false)
 ElseIf $cmdline[1] = "nutils" Then
 Else
@@ -43,7 +44,7 @@ autoitSETOption("trayMenuMode", 1)
 TraySetTooltip("NUtils")
 global $tid_exit = TrayCreateItem(_t("Exiticon"))
 global $tid_lng = trayCreateItem(_t("SelectLanguage") & " (Select Language)...")
-global $tid_checkforupdates = trayCreateItem(_t("CheckForUpdates")&"...")
+global $tid_Checkforupdates = trayCreateItem(_t("CheckForUpdates")&"...")
 global $tid_about = trayCreateItem(_t("About")&"...")
 TrayCreateItem("")
 trayItemSetOnEvent($tid_exit, "trayEvent")
@@ -89,7 +90,6 @@ return $n2
 endIf
 endFunc
 AutoItWinSetTitle($winname)
-Global Const $tagFILETIME = "dword Lo;dword Hi"
 $win = FileRead($hwFile, FileGetSize($hwFile))
 $semiindex = StringInStr($Win, ";")
 if $semiindex > 0 Then
@@ -128,7 +128,7 @@ createTrayItems()
 guiCreate($winname&"_api")
 guiRegisterMsg(0x0501, "api")
 If FileExists(StringTrimRight(@ScriptFullPath, 3) & "exe") and FileExists(@ScriptFullPath) Then
-Run(StringTrimRight(@ScriptFullPath, 3) &"exe /autoit3executescript """ & StringTrimRight(@ScriptFullPath, 3) & "au3"" CheckforupdatesQuiet")
+Run(StringTrimRight(@ScriptFullPath, 3) &"exe /autoit3executescript """ & StringTrimRight(@ScriptFullPath, 3) & "au3"" CheckForUpdatesQuiet")
 EndIf
 While 1
 $ChangedWin = 0
@@ -255,19 +255,6 @@ $systimeStruct = 0
 return $ret[2]-Floor(_date_Time_GetTickCount()/1000)
 EndFunc
 
-Func _Date_Time_GetSystemTimeAsFileTime()
-	Local $tFileTime
-
-	$tFileTime = DllStructCreate($tagFILETIME)
-	DllCall("Kernel32.dll", "none", "GetSystemTimeAsFileTime", "ptr", DllStructGetPtr($tFileTime))
-	Return $tFileTime
-EndFunc   ;==>_Date_Time_GetSystemTimeAsFileTime
-Func _Date_Time_GetTickCount()
-	Local $aResult
-
-	$aResult = DllCall("Kernel32.dll", "int", "GetTickCount")
-	Return $aResult[0]
-EndFunc   ;==>_Date_Time_GetTickCount
 Func ShowHideWin($Handle, $num)
 $Handle = hwnd($Handle)
 if $windows[$num] = 0 then
@@ -392,7 +379,7 @@ case @tray_id = $tid_exit
 exit
 case @tray_id = $tid_Checkforupdates
 If FileExists(StringTrimRight(@ScriptFullPath, 3) & "exe") and FileExists(@ScriptFullPath) Then
-Run(StringTrimRight(@ScriptFullPath, 3) &"exe /autoit3executescript """ & StringTrimRight(@ScriptFullPath, 3) & "au3"" Checkforupdates")
+Run(StringTrimRight(@ScriptFullPath, 3) &"exe /autoit3executescript """ & StringTrimRight(@ScriptFullPath, 3) & "au3"" CheckForUpdates")
 Else
 Hotkeys(0)
 MSGBox(16, "Check for Updates", "Cannot load update checker.")
@@ -690,42 +677,6 @@ EndIf
 Hotkeys(1)
 EndFunc
 
-Func _INetGetSource($s_URL, $s_Header = '')
-
-	If StringLeft($s_URL, 7) <> 'http://' And StringLeft($s_URL, 8) <> 'https://' Then $s_URL = 'http://' & $s_URL
-
-	Local $h_DLL = DllOpen("wininet.dll")
-
-	Local $ai_IRF, $s_Buf = ''
-
-	Local $ai_IO = DllCall($h_DLL, 'int', 'InternetOpen', 'str', "AutoIt v3", 'int', 0, 'int', 0, 'int', 0, 'int', 0)
-	If @error Or $ai_IO[0] = 0 Then
-		DllClose($h_DLL)
-		SetError(1)
-		Return ""
-	EndIf
-
-	Local $ai_IOU = DllCall($h_DLL, 'int', 'InternetOpenUrl', 'int', $ai_IO[0], 'str', $s_URL, 'str', $s_Header, 'int', StringLen($s_Header), 'int', 0x80000000, 'int', 0)
-	If @error Or $ai_IOU[0] = 0 Then
-		DllCall($h_DLL, 'int', 'InternetCloseHandle', 'int', $ai_IO[0])
-		DllClose($h_DLL)
-		SetError(1)
-		Return ""
-	EndIf
-
-	Local $v_Struct = DllStructCreate('udword')
-	DllStructSetData($v_Struct, 1, 1)
-
-	While DllStructGetData($v_Struct, 1) <> 0
-		$ai_IRF = DllCall($h_DLL, 'int', 'InternetReadFile', 'int', $ai_IOU[0], 'str', '', 'int', 256, 'ptr', DllStructGetPtr($v_Struct))
-		$s_Buf &= StringLeft($ai_IRF[2], DllStructGetData($v_Struct, 1))
-	WEnd
-
-	DllCall($h_DLL, 'int', 'InternetCloseHandle', 'int', $ai_IOU[0])
-	DllCall($h_DLL, 'int', 'InternetCloseHandle', 'int', $ai_IO[0])
-	DllClose($h_DLL)
-	Return $s_Buf
-EndFunc   ;==>_INetGetSource
 Func CheckForUpdates($quiet)
 $ver = _INetgetSource($Info_Website & "/nutils.ver")
 if @Error Then
@@ -739,7 +690,7 @@ $choice = MSGBox(36, _t("CheckForUpdates"), _t("YouAreRunningNUtils") & " " & $I
 If $choice = 6 Then
 InetGet($info_website & "/downloads/files/NUtils_Setup.exe", @TempDir & "\NUtils_Setup.exe", 1)
 if not @error then
-ShellExecute(@Tempdir & "\NUtils_setup.exe")
+ShellExecute(@Tempdir & "\NUtils_Setup.exe")
 EndIf
 EndIf
 Else
