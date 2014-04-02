@@ -20,7 +20,7 @@ if @Compiled Then NUtilsLoad()
 Global $lang = INIRead("settings.ini", "settings", "language", "eng")
 Global $StackCounter=INIRead("settings.ini", "settings", "StackCounter", "1")
 
-Const $Info_Version="3.1"
+Const $Info_Version="3.1.1"
 Const $Info_Authors = "Niko Carpenter "&_t("and")&" Tyler Spivey"
 Const $Info_WebSite = "http://www.arbalon.com"
 if $cmdline[0] < 1 Then Exit
