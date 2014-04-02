@@ -1,3 +1,6 @@
+3.1:
+Base modifyer keys for hiding and unhiding windows, and for increasing and decreasing the stack number are changed from Windows+shift to control+shift to prevent conflicting with Windows 7 and later's quick launch keys.
+The check for updates feature now runs when NUtils starts, so users will automatically be notified when updates are available.
 3.0:
 Hidden windows are now saved to the temp folder.
 Bug fix: Sometimes unhide window would crash NUtils.

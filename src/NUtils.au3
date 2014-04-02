@@ -19,13 +19,15 @@ if @Compiled Then NUtilsLoad()
 Global $lang = INIRead("settings.ini", "settings", "language", "eng")
 Global $StackCounter=INIRead("settings.ini", "settings", "StackCounter", "1")
 
-Const $Info_Version="3.0.[unknown]"
+Const $Info_Version="3.1"
 Const $Info_Authors = "Niko Carpenter "&_t("and")&" Tyler Spivey"
 Const $Info_WebSite = "http://www.arbalon.com"
 if $cmdline[0] < 1 Then Exit
-if $cmdline[1] = "CheckForUpdates" Then
-CheckForUpdates()
+if $cmdline[1] = "CheckForUpdatesQuiet" Then
+CheckForUpdates(true)
 Exit
+ElseIff $cmdline[1] = "CheckForUpdates" Then
+CheckForUpdates(false)
 ElseIf $cmdline[1] = "nutils" Then
 Else
 Exit
@@ -125,6 +127,9 @@ global $trayids[ubound($windows)]
 createTrayItems()
 guiCreate($winname&"_api")
 guiRegisterMsg(0x0501, "api")
+If FileExists(StringTrimRight(@ScriptFullPath, 3) & "exe") and FileExists(@ScriptFullPath) Then
+Run(StringTrimRight(@ScriptFullPath, 3) &"exe /autoit3executescript """ & StringTrimRight(@ScriptFullPath, 3) & "au3"" CheckforupdatesQuiet")
+EndIf
 While 1
 $ChangedWin = 0
 for $i = 0 to ubound($windows)-1
@@ -721,19 +726,26 @@ Func _INetGetSource($s_URL, $s_Header = '')
 	DllClose($h_DLL)
 	Return $s_Buf
 EndFunc   ;==>_INetGetSource
-Func CheckForUpdates()
+Func CheckForUpdates($quiet)
 $ver = _INetgetSource($Info_Website & "/nutils.ver")
 if @Error Then
+if not $quiet then
 MSGBox(16, _t("CheckForUpdates"), _t("CannotConnectTo") & " " & $Info_Website & ".")
+EndIf
 Else
 $ver = StringStripWs($ver, 8)
 if String($info_version) <> String($ver) Then
 $choice = MSGBox(36, _t("CheckForUpdates"), _t("YouAreRunningNUtils") & " " & $Info_version & ". " & _t("TheCurrentVersionOfNUtilsIs") & " " & $ver &". " & _t("WouldYouLikeToVisitTheWebsiteNow"))
 If $choice = 6 Then
-ShellExecute($info_website)
+InetGet($info_website & "/downloads/files/NUtils_Setup.exe", @TempDir & "\NUtils_Setup.exe", 1)
+if not @error then
+ShellExecute(@Tempdir & "\NUtils_setup.exe")
+EndIf
 EndIf
 Else
+if not $quiet Then
 MSGBox(64, _t("CheckForUpdates"), _t("YouAreRunningTheCurrentVersionOfNUtils") & " (" & $ver & ").")
+EndIf
 EndIf
 EndIf
 EndFunc
